@@ -41,9 +41,10 @@ type Requests struct {
 	 // Method specifies the HTTP method (GET, POST, PUT, etc.). 
 	   Method string 
 // // Header contains the request header fields received by the server. The type Header is a link to map[string] []string. 
- Header Header 
+//  Header Header 
 // // Body is the request's body.
- Body io.ReadCloser } 
+ Body io.ReadCloser 
+ } 
 
 
 
@@ -53,11 +54,23 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Bad request", http.StatusBadRequest)
 return 
 	}
+
 	var request helloWorldRequest ;
-	err =json.Unmarshal(body,&request)
+
+
+	err = json.Unmarshal(body,&request)
+
+	if err!=nil{
+		http.Error(w, "Bad request", http.StatusBadRequest)
+return 
+	}
+
 	
 	// fmt.Fprint(w, "Hello World\n") 
-	// response :=helloWorldResponse{Message: "Hello Worl"}
+	 response :=helloWorldResponse{Message:"Hello" +request.Name}
+
+	 encoder :=json.NewEncoder(w)
+	 encoder.Encode(response)
 	//marshal 
 	// data,err:=json.Marshal(response)
 	// if err != nil {
@@ -71,7 +84,7 @@ return
 	// fmt.Print(string(data))
 
 
-}
+
 
 //reading and writing in go
 
