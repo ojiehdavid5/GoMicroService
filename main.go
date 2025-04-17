@@ -39,14 +39,7 @@ func main(){
 type helloWorldResponse struct {     Message string  `json:"message"`  } 
 type helloWorldRequest struct {     Name string `json:"name"`}
 
-// type Requests struct { 
-// 	 // Method specifies the HTTP method (GET, POST, PUT, etc.). 
-// 	   Method string 
-// // // Header contains the request header fields received by the server. The type Header is a link to map[string] []string. 
-// //  Header Header 
-// // // Body is the request's body.
-//  Body io.ReadCloser 
-//  } 
+
 
 
 
@@ -81,10 +74,11 @@ return
 	
 	// fmt.Fprint(w, "Hello World\n") 
 	 response :=helloWorldResponse{Message:"Hello"    +  request.Name}
-	 fmt.Println(response)
 
 	encoder :=json.NewEncoder(w)
 	encoder.Encode(response)
+	fmt.Println(response)
+
 
 
 	//marshal 
