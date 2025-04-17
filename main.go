@@ -18,8 +18,10 @@ func main(){
 	// fmt.Println("This is a test.")
 	port := 8080 
 	 http.HandleFunc("/helloworld", helloWorldHandler) 
-	  log.Printf("Server starting on port %v\n", 8080) 
-	   log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
+	  log.Printf("Server starting on port %v\n", port) 
+	   http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
+	   	   log.Fatal()
+
 
 
 
@@ -69,10 +71,13 @@ return
 
 	
 	// fmt.Fprint(w, "Hello World\n") 
-	 response :=helloWorldResponse{Message:"Hello" +request.Name}
+	 response :=helloWorldResponse{Message:"Hello"    +  request.Name}
+	 fmt.Println(response)
 
-	 encoder :=json.NewEncoder(w)
-	 encoder.Encode(response)
+	encoder :=json.NewEncoder(w)
+	encoder.Encode(response)
+
+
 	//marshal 
 	// data,err:=json.Marshal(response)
 	// if err != nil {
