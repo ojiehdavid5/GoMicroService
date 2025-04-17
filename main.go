@@ -10,7 +10,13 @@ import (
 ) 
 
 
+
+func path(){
+	fmt.Println("Hello, World!")
+}
+
 func main(){
+	path()
 
 	//starting a server∏
 
