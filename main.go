@@ -12,8 +12,29 @@ import (
 
 
 func path(){
+
+	http.HandleFunc("/images/", newFooHandler)
+	http.HandleFunc("/images/persian/", newBarHandler)
+	http.HandleFunc("/images", newBuzzHandler)
+
+
 	fmt.Println("Hello, World!")
 }
+func newFooHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello, World1!")
+
+
+}
+func newBarHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello, World!2")
+
+}
+func newBuzzHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello, World!3")
+
+}
+
+
 
 func main(){
 	path()
