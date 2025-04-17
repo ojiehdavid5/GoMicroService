@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
+	// "io"
 	"log"
 
 	"net/http"
@@ -51,22 +51,31 @@ type helloWorldRequest struct {     Name string `json:"name"`}
 
 
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) { 
-	body,err:=io.ReadAll(r.Body)
-	if err!=nil{
-		http.Error(w, "Bad request", http.StatusBadRequest)
-return 
-	}
+// 	body,err:=io.ReadAll(r.Body)
+// 	if err!=nil{
+// 		http.Error(w, "Bad request", http.StatusBadRequest)
+// return 
+// 	}
 
 	var request helloWorldRequest ;
 
 
 
 
-	err = json.Unmarshal(body,&request)
+	// err = json.Unmarshal(body,&request)
 
-	if err!=nil{
+	decoder:=json.NewDecoder(r.Body);
+	err := decoder.Decode(&request)
+	fmt.Println(request)
+
+
+		if err !=nil{
 		http.Error(w, "Bad request", http.StatusBadRequest)
 return 
+
+
+
+
 	}
 
 	
