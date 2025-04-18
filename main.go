@@ -7,126 +7,102 @@ import (
 	"log"
 
 	"net/http"
-) 
+)
 
+// func path() {
 
+// 	http.HandleFunc("/images/", newFooHandler)
+// 	http.HandleFunc("/images/persian/", newBarHandler)
+// 	http.HandleFunc("/images", newBuzzHandler)
 
-func path(){
+// 	fmt.Println("Hello, World!")
+// }
+// func newFooHandler(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Hello, World1!")
 
-	http.HandleFunc("/images/", newFooHandler)
-	http.HandleFunc("/images/persian/", newBarHandler)
-	http.HandleFunc("/images", newBuzzHandler)
+// }
+// func newBarHandler(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Hello, World!2")
 
+// }
+// func newBuzzHandler(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("Hello, World!3")
 
-	fmt.Println("Hello, World!")
-}
-func newFooHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello, World1!")
+// }
 
-
-}
-func newBarHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello, World!2")
-
-}
-func newBuzzHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello, World!3")
-
-}
-
-
-
-func main(){
-	path()
+func main() {
+	// path()
 
 	//starting a server∏
 
 	// fmt.Println("Hello, World!")
 	// fmt.Println("This is a test.")
-	port := 8080 
-	 http.HandleFunc("/helloworld", helloWorldHandler) 
-	  log.Printf("Server starting on port %v\n", port) 
-	   http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
-	   	   log.Fatal()
-
-
-
+	port := 8080
+	http.HandleFunc("/helloworld", helloWorldHandler)
+	log.Printf("Server starting on port %v\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
+	log.Fatal()
 
 	//Reading and writing json
 
 	//“Marshalling Go structs to JSON”
 
-	
-
-	
-	
 }
+
 //starting a server
 
-type helloWorldResponse struct {     Message string  `json:"message"`  } 
-type helloWorldRequest struct {     Name string `json:"name"`}
+type helloWorldResponse struct {
+	Message string `json:"david"`
+}
 
+type helloWorldRequest struct {
+	Name string `json:"name"`
+}
 
+func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
+	// 	body,err:=io.ReadAll(r.Body)
+	// 	if err!=nil{
+	// 		http.Error(w, "Bad request", http.StatusBadRequest)
+	// return
+	// 	}
 
-
-
-func helloWorldHandler(w http.ResponseWriter, r *http.Request) { 
-// 	body,err:=io.ReadAll(r.Body)
-// 	if err!=nil{
-// 		http.Error(w, "Bad request", http.StatusBadRequest)
-// return 
-// 	}
-
-	var request helloWorldRequest ;
-
-
-
+	var request helloWorldRequest
+	fmt.Println(request)
 
 	// err = json.Unmarshal(body,&request)
 
-	decoder:=json.NewDecoder(r.Body);
+	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&request)
 	fmt.Println(request)
 
-
-		if err !=nil{
+	if err != nil {
 		http.Error(w, "Bad request", http.StatusBadRequest)
-return 
-
-
-
+		return
 
 	}
 
-	
-	// fmt.Fprint(w, "Hello World\n") 
-	 response :=helloWorldResponse{Message:"Hello"    +  request.Name}
+	// fmt.Fprint(w, "Hello World\n")
+	response := helloWorldResponse{Message: "Hello" + request.Name}
 
-	encoder :=json.NewEncoder(w)
-	encoder.Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	// encoder.Encode(response)
 	fmt.Println(response)
 
-
-
-	//marshal 
+	//marshal
 	// data,err:=json.Marshal(response)
 	// if err != nil {
 	// 	panic("oops");
 
-		
-
-
 }
-	// fmt.Fprint(w,string(data))
-	// fmt.Print(string(data))
 
-
-
+// fmt.Fprint(w,string(data))
+// fmt.Print(string(data))
 
 //reading and writing in go
 
-// func Marshal(v interface{}) ([]byte, error) 
+// func Marshal(v interface{}) ([]byte, error)
 
 //unmarshal
-
-
