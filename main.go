@@ -39,6 +39,10 @@ func main() {
 	// fmt.Println("This is a test.")
 	port := 8080
 	http.HandleFunc("/helloworld", helloWorldHandler)
+	// servering a static file to the broswer as response
+	http.Handle("/images", http.FileServer(http.Dir("./images")))
+
+
 	log.Printf("Server starting on port %v\n", port)
 	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
 	log.Fatal()
@@ -52,7 +56,7 @@ func main() {
 //starting a server
 
 type helloWorldResponse struct {
-	Message string `json:"david"`
+	Message string `json:"Message"`
 }
 
 type helloWorldRequest struct {
